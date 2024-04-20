@@ -14,7 +14,7 @@ def main_menu():
 
         #if statement to connect the users choice to the right function
         if choice == '1':
-            check_seat_availability()
+            check_seat_availability(input("Enter seat id: "))
         elif choice == '2':
             book_seat()
         elif choice == '3':
@@ -28,9 +28,24 @@ def main_menu():
         else:
             print("Invalid choice. Please try again.")
 
+#list all the seats on the jet
+bookable_seats = ['1A', '2A', '3A', '4A','1B', '2B', '3B', '4B', '1C', '2C',
+                  '3C', '4C', '1D', '2D', '3D', '4D', '1E', '2E', '3E', '4E',
+                  '1F', '2F', '3F', '4F', '77A', '78A', '79A', '80A', '77B', '78B', '79B', '80B',
+                   '79D', '80D', '79E', '80E', '79F', '80F']
+#initially all seats are free
+free_seats = list(bookable_seats)
+#initially zero seats are booked
+booked_seats = []
 #define function to check the avaiability of the seats
-def check_seat_availability():
-    pass
+def check_seat_availability(seat_id):
+    #Check if the specified seat is free and available for booking.
+    if seat_id in free_seats:
+        print(f"Seat {seat_id} is available.")
+        return True
+    else:
+        print(f"Seat {seat_id} is not available.")
+        return False
 
 #define function to book a seat
 def book_seat():
