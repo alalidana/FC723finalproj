@@ -43,21 +43,34 @@ def check_seat_availability(seat_id):
     if seat_id in free_seats:
         print(f"Seat {seat_id} is available.")
         return True
-    else:
+    elif:
         print(f"Seat {seat_id} is not available.")
+        return False
+    #check if the seat_id is a valid seat identifier
+    else:
+        print(f"{seat_id} does not correspond to a valid seat identifier.")
         return False
 
 #define function to book a seat if available
 def book_seat(seat_id):
+    #check if the seat_id is a valid seat identifier
+    if seat_id not in bookable_seats:
+        print(f"{seat_id} does not correspond to a valid seat identifier.")
+        return
+
     if check_seat_availability(seat_id):
         free_seats.remove(seat_id)
         booked_seats.append(seat_id)
         print(f"Seat {seat_id} has been successfully booked.")
     else:
         print(f"Seat {seat_id} cannot be booked.")
-
 #define function to cancel a seat
 def free_seat(seat_id):
+    #check if the seat_id is a valid seat identifier
+    if seat_id not in bookable_seats:
+        print(f"{seat_id} does not correspond to a valid seat identifier.")
+        return
+
     if seat_id in booked_seats:
         booked_seats.remove(seat_id)
         free_seats.append(seat_id)
