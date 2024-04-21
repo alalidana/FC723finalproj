@@ -9,10 +9,13 @@ customer_data = {}
 #define function generates a random booking reference consisting of exactly eight alphanumeric characters.
 # It checks against a set of existing references to ensure that the generated reference is unique.
 def generate_booking_reference():
+    #loops until a unique reference is generated
     while True:
+        #generate a random 8-character alphanumeric string
         reference = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
         #check if the generated reference is unique
         if reference not in booking_references:
+            #if unique, add to the set to keep track and return the reference
             booking_references.add(reference)
             return reference
 #define function to display the main menu interface
