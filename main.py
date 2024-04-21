@@ -99,7 +99,7 @@ def book_seat(seat_id):
         free_seats.remove(seat_id)
         print(f"Seat {seat_id} has been successfully booked. Your booking reference is {booking_ref}.")
     else:
-        print(f"Seat {seat_id} cannot be booked or does not exist.")
+        print(f"Seat {seat_id} cannot be booked.It may be an aisle, storage area, or does not exist.")
 #define function to promt for cancellation reasons
 #to apply agile software development to enhance the user experience
 def get_cancellation_reason():
@@ -147,7 +147,7 @@ def free_seat(seat_id):
         reason = get_cancellation_reason()
         print(f"Booking for seat {seat_id} has been cancelled. Reason: {reason}")
 
-        # Save the cancellation reason to a file
+        #save the cancellation reason to a file
         save_cancellation_feedback(booking_ref, reason)
     else:
         print(f"Seat {seat_id} is not currently booked or does not exist.")
