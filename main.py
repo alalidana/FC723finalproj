@@ -7,7 +7,7 @@ booking_references = set()
 #creatre dictionary to keep customer data with booking reference as key
 customer_data = {}
 #define function generates a random booking reference consisting of exactly eight alphanumeric characters.
-# It checks against a set of existing references to ensure that the generated reference is unique.
+#it checks against a set of existing references to ensure that the generated reference is unique.
 def generate_booking_reference():
     #loops until a unique reference is generated
     while True:
@@ -43,7 +43,7 @@ def main_menu():
             show_booking_state()
         elif choice == '5':
             exit_program()
-            # Exit the loop to terminate the program
+            #exit the loop to terminate the program
             break
         else:
             print("Invalid choice. Please try again.")
@@ -59,7 +59,7 @@ free_seats = list(bookable_seats)
 booked_seats = {}
 #define function to check the availability of the seats
 def check_seat_availability(seat_id):
-    #Check if the specified seat is free and available for booking
+    #check if the specified seat is free and available for booking
     #check if seat in free_seats list
     if seat_id in free_seats:
         print(f"Seat {seat_id} is available.")
@@ -84,7 +84,7 @@ def book_seat(seat_id):
         first_name = input("Enter your first name: ")
         last_name = input("Enter your last name: ")
 
-        # Store the booking reference in place of 'R'
+        #store the booking reference in place of 'R'
         booked_seats[seat_id] = booking_ref
 
         #store the customer data in the customer_data dictionary
@@ -95,12 +95,12 @@ def book_seat(seat_id):
             'seat_row': seat_id[:-1],  # Assuming seat ID format is 'rowcolumn', e.g., '2A'
             'seat_column': seat_id[-1]
         }
-        # Remove the seat from the free list
+        #remove the seat from the free list
         free_seats.remove(seat_id)
         print(f"Seat {seat_id} has been successfully booked. Your booking reference is {booking_ref}.")
     else:
         print(f"Seat {seat_id} cannot be booked.It may be an aisle, storage area, or does not exist.")
-#define function to promt for cancellation reasons
+#Extra! define function to promt for cancellation reasons
 #to apply agile software development to enhance the user experience
 def get_cancellation_reason():
     #choices of possible reasons
