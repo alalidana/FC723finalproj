@@ -1,3 +1,20 @@
+import random
+import string
+
+#set to keep track of all booking references to ensure uniqueness
+booking_references = set()
+
+#creatre dictionary to keep customer data with booking reference as key
+customer_data = {}
+#define function generates a random booking reference consisting of exactly eight alphanumeric characters.
+# It checks against a set of existing references to ensure that the generated reference is unique.
+def generate_booking_reference():
+    while True:
+        reference = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
+        #check if the generated reference is unique
+        if reference not in booking_references:
+            booking_references.add(reference)
+            return reference
 #define function to display the main menu interface
 def main_menu():
     #loop that keeps program running until the user decides to exit the program
@@ -36,7 +53,7 @@ bookable_seats = ['1A', '2A', '3A', '4A','1B', '2B', '3B', '4B', '1C', '2C',
 #initially all seats are free
 free_seats = list(bookable_seats)
 #initially zero seats are booked
-booked_seats = []
+booked_seats = {}
 #define function to check the availability of the seats
 def check_seat_availability(seat_id):
     #Check if the specified seat is free and available for booking
@@ -52,35 +69,50 @@ def check_seat_availability(seat_id):
     else:
         print(f"{seat_id} does not correspond to a valid seat identifier.")
         return False
-
+#modify the book_seat function to store a booking reference instead of 'R'
 #define function to book a seat if available
 def book_seat(seat_id):
-    #check if the seat_id is a valid seat identifier
-    if seat_id not in bookable_seats:
-        print(f"{seat_id} does not correspond to a valid seat identifier.")
-        return
+    if seat_id in free_seats:
+        #generate a unique booking reference
+        booking_ref = generate_booking_reference()
 
-    if check_seat_availability(seat_id):
+        #get customer details
+        passport_number = input("Enter your passport number: ")
+        first_name = input("Enter your first name: ")
+        last_name = input("Enter your last name: ")
+
+        # Store the booking reference in place of 'R'
+        booked_seats[seat_id] = booking_ref
+
+        #store the customer data in the customer_data dictionary
+        customer_data[booking_ref] = {
+            'passport_number': passport_number,
+            'first_name': first_name,
+            'last_name': last_name,
+            'seat_row': seat_id[:-1],  # Assuming seat ID format is 'rowcolumn', e.g., '2A'
+            'seat_column': seat_id[-1]
+        }
+        # Remove the seat from the free list
         free_seats.remove(seat_id)
-        booked_seats.append(seat_id)
-        print(f"Seat {seat_id} has been successfully booked.")
+        print(f"Seat {seat_id} has been successfully booked. Your booking reference is {booking_ref}.")
     else:
-        print(f"Seat {seat_id} cannot be booked.")
+        print(f"Seat {seat_id} cannot be booked or does not exist.")
 #define function to cancel a seat
+#modify the free_seat function to remove customer data when a booking is cancelled
 def free_seat(seat_id):
-    #check if the seat_id is a valid seat identifier
-    if seat_id not in bookable_seats:
-        print(f"{seat_id} does not correspond to a valid seat identifier.")
-        return
-
     if seat_id in booked_seats:
-        #remove the booked seat list
-        booked_seats.remove(seat_id)
-        #add it back to the free seat list
+        #get the booking reference for the seat
+        booking_ref = booked_seats[seat_id]
+
+        #remove booking details from the customer_data dictionary
+        del customer_data[booking_ref]
+
+        #remove the booking reference and free up the seat
+        del booked_seats[seat_id]
         free_seats.append(seat_id)
         print(f"Booking for seat {seat_id} has been cancelled.")
     else:
-        print(f"Seat {seat_id} is not currently booked.")
+        print(f"Seat {seat_id} is not currently booked or does not exist.")
 
 #define function to show the current booking state
 def show_booking_state():
