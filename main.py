@@ -75,7 +75,7 @@ def check_seat_availability(seat_id):
 #modify the book_seat function to store a booking reference instead of 'R'
 #define function to book a seat if available
 def book_seat(seat_id):
-    if seat_id in free_seats:
+    if seat_id in bookable_seats:
         #generate a unique booking reference
         booking_ref = generate_booking_reference()
 
