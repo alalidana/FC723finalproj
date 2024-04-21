@@ -10,7 +10,7 @@ def main_menu():
         print("4. Show booking state")
         print("5. Exit program")
         #ask the user to make a choice from the menu options
-        choice= input("\nEnter your choice (1-5): ")
+        choice = input("\nEnter your choice (1-5): ")
 
         #if statement to connect the users choice to the right function
         if choice == '1':
