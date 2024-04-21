@@ -100,6 +100,36 @@ def book_seat(seat_id):
         print(f"Seat {seat_id} has been successfully booked. Your booking reference is {booking_ref}.")
     else:
         print(f"Seat {seat_id} cannot be booked or does not exist.")
+#define function to promt for cancellation reasons
+#to apply agile software development to enhance the user experience
+def get_cancellation_reason():
+    #choices of possible reasons
+    reasons = {
+        '1': 'Change of plans',
+        '2': 'Found a better flight',
+        '3': 'Booking error',
+        '4': 'Other - please specify'
+    }
+    print("Please select a reason for cancellation:")
+    for key, reason in reasons.items():
+        print(f"{key}. {reason}")
+    choice = input("Enter your choice (1-4): ")
+    #special case for longer answer
+    if choice == '4':
+        return input("Please specify your reason: ")
+    else:
+        return reasons.get(choice, "Invalid choice")
+
+
+#define function to save cancellation feedback
+def save_cancellation_feedback(booking_ref, reason):
+    #define the filename
+    filename = 'cancellation_feedback.txt'
+
+    #open the file in append mode
+    with open(filename, 'a') as file:
+        # Write the feedback with a timestamp
+        file.write(f" - Booking Ref: {booking_ref} - Cancellation Reason: {reason}\n")
 #define function to cancel a seat
 #modify the free_seat function to remove customer data when a booking is cancelled
 def free_seat(seat_id):
@@ -113,7 +143,12 @@ def free_seat(seat_id):
         #remove the booking reference and free up the seat
         del booked_seats[seat_id]
         free_seats.append(seat_id)
-        print(f"Booking for seat {seat_id} has been cancelled.")
+        # Prompt for cancellation reason
+        reason = get_cancellation_reason()
+        print(f"Booking for seat {seat_id} has been cancelled. Reason: {reason}")
+
+        # Save the cancellation reason to a file
+        save_cancellation_feedback(booking_ref, reason)
     else:
         print(f"Seat {seat_id} is not currently booked or does not exist.")
 
